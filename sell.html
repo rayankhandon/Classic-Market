@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sell Your Product — Classic Market | Premium Computer Electronics Marketplace</title>
+  <meta name="description" content="List your computer hardware, laptop, graphics card, mechanical keyboard, or audio gear on Classic Market. Connect with serious technology buyers with guaranteed escrow.">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sell Your Computer Electronics — Classic Market">
+  <meta property="og:description" content="List your computer hardware and connect with verified buyers. Zero upfront fees, protected escrow transactions.">
+  <meta property="og:image" content="assets/images/hero-tech.jpg">
+
+  <!-- Favicon / Minimal SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23000000'/><text x='50' y='68' font-size='52' font-family='sans-serif' font-weight='900' fill='%23ffffff' text-anchor='middle'>C</text></svg>">
+
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- =======================================================================
+       SITE HEADER
+       ======================================================================= -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-logo" aria-label="Classic Market Home">
+        CLASSIC MARKET<span class="brand-dot" aria-hidden="true"></span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="desktop-nav" aria-label="Primary Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="index.html#shop" class="nav-link">Shop</a>
+        <button type="button" class="nav-link" id="navCartLink">Cart <span class="nav-cart-pill" id="navCartPill" style="display: none;">(0)</span></button>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Quick Search Link -->
+        <a href="index.html#shop" class="btn-icon" aria-label="Search catalog" title="Search catalog">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </a>
+
+        <!-- Account / Login Button -->
+        <button class="btn-icon desktop-only" id="accountToggleBtn" aria-label="Account Login" title="Account">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+
+        <!-- Cart Button -->
+        <button class="btn-icon cart-btn" id="cartToggleBtn" aria-label="Open shopping cart" title="Shopping Cart">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button class="btn-icon mobile-toggle" id="mobileToggleBtn" aria-label="Open mobile navigation menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =======================================================================
+       MOBILE NAVIGATION DRAWER
+       ======================================================================= -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-backdrop"></div>
+    <div class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+      <div class="mobile-drawer-header">
+        <span class="brand-logo">CLASSIC MARKET<span class="brand-dot"></span></span>
+        <button class="btn-icon" id="closeMobileMenuBtn" aria-label="Close menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <nav class="mobile-nav-list">
+        <a href="index.html" class="mobile-nav-link">Home</a>
+        <a href="index.html#shop" class="mobile-nav-link">Shop Products</a>
+        <button type="button" class="mobile-nav-link" id="mobileCartLink" style="text-align: left; background: none; border: none; width: 100%; cursor: pointer;">Cart <span id="mobileCartPill" style="display: none;">(0)</span></button>
+      </nav>
+      <div class="mobile-drawer-footer">
+        <a href="index.html#shop" class="btn btn-secondary" style="width: 100%;">Browse Marketplace</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       MAIN CONTENT: SELL PRODUCT
+       ======================================================================= -->
+  <main class="sell-page-wrapper">
+    <div class="container">
+      
+      <!-- Page Heading -->
+      <div class="sell-form-header">
+        <h1 class="h1-title">Sell Your Product</h1>
+        <p>List your computer hardware or electronics and connect with buyers.</p>
+      </div>
+
+      <!-- Seller Form Card -->
+      <div class="sell-form-card">
+        <form id="sellProductForm" novalidate>
+
+          <!-- FIELDSET 1: PRODUCT INFORMATION -->
+          <fieldset class="form-fieldset">
+            <legend class="fieldset-legend">1. Product Information</legend>
+            <p class="fieldset-desc">Provide accurate technical specifications and grading details.</p>
+
+            <div class="form-grid">
+              
+              <!-- Product Title -->
+              <div class="form-group full-width">
+                <label class="form-label" for="productName">
+                  Product Name <span class="required" aria-hidden="true">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="productName" 
+                  class="form-input" 
+                  placeholder="e.g. Apex Pro 16 G3 Gaming Laptop / RTX 4080 Super" 
+                  required
+                  aria-describedby="productNameError"
+                >
+                <span class="input-error-msg" id="productNameError" role="alert"></span>
+              </div>
+
+              <!-- Category -->
+              <div class="form-group">
+                <label class="form-label" for="productCategory">
+                  Category <span class="required" aria-hidden="true">*</span>
+                </label>
+                <select id="productCategory" class="form-select" required aria-describedby="productCategoryError">
+                  <option value="" disabled selected>Select hardware category</option>
+                  <option value="Laptops">Laptops</option>
+                  <option value="Accessories">Accessories (Keyboards, Mice, Audio)</option>
+                  <option value="Monitors">Monitors & Displays</option>
+                  <option value="Components">Components (GPUs, CPUs, RAM)</option>
+                  <option value="Audio">Audio & Acoustics</option>
+                </select>
+                <span class="input-error-msg" id="productCategoryError" role="alert"></span>
+              </div>
+
+              <!-- Condition -->
+              <div class="form-group">
+                <label class="form-label" for="productCondition">
+                  Condition <span class="required" aria-hidden="true">*</span>
+                </label>
+                <select id="productCondition" class="form-select" required aria-describedby="productConditionError">
+                  <option value="" disabled selected>Select hardware condition</option>
+                  <option value="Brand New">Brand New (Factory Sealed)</option>
+                  <option value="Like New">Like New (Mint / Unblemished)</option>
+                  <option value="Excellent Condition">Excellent Condition (Minor Signs)</option>
+                  <option value="Open Box">Open Box (Fully Tested)</option>
+                  <option value="Certified Refurbished">Certified Refurbished</option>
+                </select>
+                <span class="input-error-msg" id="productConditionError" role="alert"></span>
+              </div>
+
+              <!-- Asking Price -->
+              <div class="form-group full-width">
+                <label class="form-label" for="productPrice">
+                  Listing Price (USD) <span class="required" aria-hidden="true">*</span>
+                </label>
+                <div class="price-input-wrap">
+                  <span class="price-symbol" aria-hidden="true">$</span>
+                  <input 
+                    type="number" 
+                    id="productPrice" 
+                    class="form-input" 
+                    placeholder="1299" 
+                    min="5" 
+                    max="100000" 
+                    step="1" 
+                    required
+                    aria-describedby="productPriceError"
+                  >
+                </div>
+                <span class="input-error-msg" id="productPriceError" role="alert"></span>
+              </div>
+
+              <!-- Product Description -->
+              <div class="form-group full-width">
+                <label class="form-label" for="productDescription">
+                  Detailed Description & Included Accessories <span class="required" aria-hidden="true">*</span>
+                </label>
+                <textarea 
+                  id="productDescription" 
+                  class="form-textarea" 
+                  rows="4" 
+                  placeholder="Detail hardware specs, battery health, original accessories, charger, packaging, and any scratches or usage notes..." 
+                  required
+                  aria-describedby="productDescError"
+                ></textarea>
+                <span class="input-error-msg" id="productDescError" role="alert"></span>
+              </div>
+
+            </div>
+          </fieldset>
+
+          <!-- FIELDSET 2: PRODUCT IMAGE -->
+          <fieldset class="form-fieldset">
+            <legend class="fieldset-legend">2. Product Photography</legend>
+            <p class="fieldset-desc">Upload clear, original product photographs in good studio lighting.</p>
+
+            <div class="form-group">
+              <div class="dropzone" id="imageDropzone" role="button" tabindex="0" aria-label="Upload product image">
+                <input type="file" id="productImageInput" class="hidden-file-input" accept="image/jpeg,image/png,image/webp">
+                <div class="dropzone-icon" aria-hidden="true">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                </div>
+                <p class="dropzone-text">Drag and drop your product photo here, or click to browse</p>
+                <p class="dropzone-subtext">Supports high-resolution JPG, PNG, and WebP up to 10MB</p>
+              </div>
+
+              <!-- Image Preview Container -->
+              <div class="image-preview-container" id="imagePreviewContainer">
+                <div class="preview-meta">
+                  <img src="" alt="Uploaded hardware preview" class="preview-thumb" id="previewThumbnail">
+                  <div>
+                    <div class="preview-name" id="previewFileName">filename.jpg</div>
+                    <div class="preview-size" id="previewFileSize">1.2 MB</div>
+                  </div>
+                </div>
+                <button type="button" class="remove-img-btn" id="removeImageBtn">Replace Photo</button>
+              </div>
+
+              <span class="input-error-msg" id="imageErrorMsg" role="alert"></span>
+            </div>
+          </fieldset>
+
+          <!-- FIELDSET 3: SELLER INFORMATION -->
+          <fieldset class="form-fieldset">
+            <legend class="fieldset-legend">3. Seller Information</legend>
+            <p class="fieldset-desc">Your contact information is kept private until escrow transaction is initiated.</p>
+
+            <div class="form-grid">
+              
+              <!-- Seller Full Name -->
+              <div class="form-group">
+                <label class="form-label" for="sellerName">
+                  Full Name <span class="required" aria-hidden="true">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="sellerName" 
+                  class="form-input" 
+                  placeholder="e.g. Marcus Sterling" 
+                  required
+                  aria-describedby="sellerNameError"
+                >
+                <span class="input-error-msg" id="sellerNameError" role="alert"></span>
+              </div>
+
+              <!-- Seller Email -->
+              <div class="form-group">
+                <label class="form-label" for="sellerEmail">
+                  Email Address <span class="required" aria-hidden="true">*</span>
+                </label>
+                <input 
+                  type="email" 
+                  id="sellerEmail" 
+                  class="form-input" 
+                  placeholder="marcus@example.com" 
+                  required
+                  aria-describedby="sellerEmailError"
+                >
+                <span class="input-error-msg" id="sellerEmailError" role="alert"></span>
+              </div>
+
+              <!-- Seller Phone -->
+              <div class="form-group">
+                <label class="form-label" for="sellerPhone">
+                  Phone Number <span class="required" aria-hidden="true">*</span>
+                </label>
+                <input 
+                  type="tel" 
+                  id="sellerPhone" 
+                  class="form-input" 
+                  placeholder="(555) 234-5678" 
+                  required
+                  aria-describedby="sellerPhoneError"
+                >
+                <span class="input-error-msg" id="sellerPhoneError" role="alert"></span>
+              </div>
+
+              <!-- Location -->
+              <div class="form-group">
+                <label class="form-label" for="sellerLocation">
+                  City & State / Country <span class="required" aria-hidden="true">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="sellerLocation" 
+                  class="form-input" 
+                  placeholder="e.g. Seattle, WA" 
+                  required
+                  aria-describedby="sellerLocationError"
+                >
+                <span class="input-error-msg" id="sellerLocationError" role="alert"></span>
+              </div>
+
+            </div>
+          </fieldset>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary sell-submit-btn" id="submitListingBtn">
+            List Product
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- =======================================================================
+       LISTING CONFIRMATION MODAL
+       ======================================================================= -->
+  <div class="modal-overlay" id="confirmationModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
+    <div class="account-modal-box" style="max-width: 520px;">
+      <button class="modal-close-btn" id="closeConfirmModalBtn" aria-label="Close listing confirmation">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div style="width: 48px; height: 48px; border-radius: 50%; background-color: var(--color-black); color: var(--color-white); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <h3 id="confirmModalTitle" style="font-size: 1.4rem; font-weight: 800; margin-bottom: 8px;">Hardware Listed Successfully</h3>
+      <p style="font-size: 0.875rem; color: var(--color-mid-gray); margin-bottom: 24px;">Your listing has been submitted and queued for verification inspection.</p>
+
+      <div style="border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 24px; display: flex; gap: 16px; align-items: center; background-color: var(--color-bg-secondary);">
+        <img id="confirmImg" src="" alt="" style="width: 72px; height: 72px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--color-border); background-color: white;">
+        <div style="flex: 1;">
+          <div id="confirmCategory" style="font-size: 0.72rem; text-transform: uppercase; font-weight: 600; color: var(--color-muted-gray);"></div>
+          <h4 id="confirmTitle" style="font-size: 0.95rem; font-weight: 700; margin: 2px 0 4px; color: var(--color-black);"></h4>
+          <div style="display: flex; gap: 8px; align-items: baseline;">
+            <span id="confirmPrice" style="font-weight: 800; color: var(--color-black);"></span>
+            <span id="confirmCondition" class="badge badge-condition" style="font-size: 0.7rem;"></span>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size: 0.8125rem; color: var(--color-mid-gray); margin-bottom: 24px;">
+        Seller: <strong id="confirmSeller" style="color: var(--color-black);"></strong>
+      </div>
+
+      <div style="display: flex; gap: 12px;">
+        <button type="button" class="btn btn-outline" id="listAnotherBtn" style="flex: 1;">
+          List Another Product
+        </button>
+        <a href="index.html#shop" class="btn btn-primary" style="flex: 1;">
+          View Marketplace
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       CART DRAWER
+       ======================================================================= -->
+  <div class="cart-drawer-wrap" id="cartDrawerWrap" aria-hidden="true">
+    <div class="cart-backdrop"></div>
+    <div class="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping Cart">
+      <div class="cart-header">
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <h3 class="h3-title">Your Cart</h3>
+          <span id="cartCountDrawer" style="font-size: 0.84rem; color: var(--color-mid-gray);">(0 items)</span>
+        </div>
+        <button class="btn-icon" id="closeCartBtn" aria-label="Close cart drawer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="cart-body">
+        <div id="cartItemsList" class="cart-items-list">
+          <!-- Cart row items rendered dynamically -->
+        </div>
+
+        <div id="cartEmptyState" class="cart-empty" style="display: none;">
+          <div class="cart-empty-icon" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+          </div>
+          <h4 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 6px;">Your cart is empty</h4>
+          <p style="font-size: 0.84rem; color: var(--color-muted-gray); margin-bottom: 20px;">Explore verified computers, components, and accessories to get started.</p>
+          <a href="index.html#shop" class="btn btn-secondary btn-sm">Browse Catalog</a>
+        </div>
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-summary-row">
+          <span>Shipping (Tracked & Insured)</span>
+          <span style="font-weight: 600; color: var(--color-black);">Complimentary</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>Escrow Protection Guarantee</span>
+          <span style="font-weight: 600; color: var(--color-black);">Included</span>
+        </div>
+        <div class="cart-summary-row total">
+          <span>Subtotal</span>
+          <span id="cartSubtotal">$0</span>
+        </div>
+        <button class="btn btn-primary cart-checkout-btn" id="checkoutBtn">
+          Checkout with Escrow
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       ACCOUNT / MEMBER MODAL
+       ======================================================================= -->
+  <div class="modal-overlay" id="accountModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="accountModalTitle">
+    <div class="account-modal-box">
+      <button class="modal-close-btn" id="closeAccountModalBtn" aria-label="Close login dialog">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <h3 id="accountModalTitle">CLASSIC MARKET ID</h3>
+      <p>Sign in to manage your hardware listings and track purchased electronics.</p>
+      <form class="account-form" onsubmit="event.preventDefault(); document.getElementById('accountModal').classList.remove('open');">
+        <div class="form-group">
+          <label class="form-label" for="memberEmail">Member Email</label>
+          <input type="email" id="memberEmail" class="form-input" placeholder="alex@domain.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="memberKey">Security Passcode</label>
+          <input type="password" id="memberKey" class="form-input" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top: 8px;">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       SITE FOOTER
+       ======================================================================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo">CLASSIC MARKET<span class="brand-dot"></span></a>
+          <p class="footer-desc">
+            A modern, minimal technology marketplace designed for transparent buying and selling of premium computer hardware.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Marketplace</h4>
+          <nav class="footer-links" aria-label="Footer Marketplace Navigation">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="index.html#shop" class="footer-link">Shop Catalog</a>
+            <a href="sell.html" class="footer-link">Sell Product</a>
+          </nav>
+        </div>
+
+        <div class="footer-col">
+          <h4>Support</h4>
+          <nav class="footer-links" aria-label="Footer Support Navigation">
+            <a href="#siteHeader" class="footer-link">Insured Shipping</a>
+            <a href="#siteHeader" class="footer-link">Buyer Protection</a>
+            <a href="#siteHeader" class="footer-link">Condition Guide</a>
+          </nav>
+        </div>
+
+        <div class="footer-col">
+          <h4>Standards</h4>
+          <nav class="footer-links" aria-label="Footer Standards Navigation">
+            <a href="#siteHeader" class="footer-link">Hardware Verification</a>
+            <a href="#siteHeader" class="footer-link">Escrow Security</a>
+            <a href="#siteHeader" class="footer-link">Privacy Protocol</a>
+          </nav>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Classic Market Inc. All rights reserved.</p>
+        <p>Built for clarity, speed, and trusted technology exchange.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/sell.js"></script>
+</body>
+</html>
