@@ -59,6 +59,41 @@ document.addEventListener("DOMContentLoaded", () => {
   let activeSort = "featured";
   let searchQuery = "";
   let activeQuickViewId = null;
+  const baseProducts = (typeof PRODUCTS !== "undefined" && Array.isArray(PRODUCTS)) ? PRODUCTS : (Array.isArray(window.PRODUCTS) ? window.PRODUCTS : []);
+  let allProducts = [...baseProducts];
+
+  // Fetch live products from Supabase
+  async function loadProductsFromSupabase() {
+    try {
+      if (window.SupabaseDB) {
+        const remoteProducts = await window.SupabaseDB.fetchProducts();
+        if (remoteProducts && remoteProducts.length > 0) {
+          // Normalize remote products to match schema
+          const mapped = remoteProducts.map(p => ({
+            id: p.id || `supa-${p.name.toLowerCase().replace(/\s+/g, '-')}`,
+            name: p.name,
+            category: p.category,
+            price: Number(p.price) || 0,
+            condition: p.condition || "Used",
+            conditionNote: p.condition_note || p.conditionNote || "",
+            description: p.description || "",
+            specs: Array.isArray(p.specs) ? p.specs : [],
+            image: p.image || "assets/images/hero-tech.jpg",
+            availability: p.availability || "In Stock",
+            seller: p.seller || "Verified Member",
+            location: p.location || "Online"
+          }));
+
+          // Merge: remote items take priority, fallback with curated catalog
+          allProducts = [...mapped, ...PRODUCTS.filter(cp => !mapped.some(m => m.name.toLowerCase() === cp.name.toLowerCase()))];
+          renderProducts();
+          console.log(`[Supabase] Loaded ${remoteProducts.length} live product(s) from Supabase.`);
+        }
+      }
+    } catch (err) {
+      console.warn("[Supabase] Fallback to local products:", err);
+    }
+  }
 
   // --- Scroll Header Effect ---
   window.addEventListener("scroll", () => {
@@ -195,7 +230,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Render Products ---
   function getFilteredAndSortedProducts() {
-    let list = [...PRODUCTS];
+    window.allProducts = allProducts;
+    let list = [...allProducts];
 
     // Category Filter
     if (activeCategory !== "all") {
@@ -315,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cartBtn) {
         cartBtn.addEventListener("click", () => {
           CartState.addItem(id, 1);
-          const p = PRODUCTS.find(item => item.id === id);
+          const p = allProducts.find(item => item.id === id) || PRODUCTS.find(item => item.id === id);
           showToast(`Added "${p ? p.name : 'Product'}" to cart`);
         });
       }
@@ -324,7 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Quick View Modal Flow ---
   function openQuickView(productId) {
-    const product = PRODUCTS.find(p => p.id === productId);
+    const product = allProducts.find(p => p.id === productId) || PRODUCTS.find(p => p.id === productId);
     if (!product) return;
 
     activeQuickViewId = productId;
@@ -340,7 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
     qvLocation.textContent = product.location;
 
     // Specs table
-    qvSpecsList.innerHTML = product.specs.map(spec => `
+    qvSpecsList.innerHTML = (product.specs || []).map(spec => `
       <tr>
         <td>${spec.label}</td>
         <td>${spec.value}</td>
@@ -367,8 +403,8 @@ document.addEventListener("DOMContentLoaded", () => {
     qvAddToCartBtn.addEventListener("click", () => {
       if (!activeQuickViewId) return;
       CartState.addItem(activeQuickViewId, 1);
-      const product = PRODUCTS.find(p => p.id === activeQuickViewId);
-      showToast(`Added "${product.name}" to cart`);
+      const product = allProducts.find(p => p.id === activeQuickViewId) || PRODUCTS.find(p => p.id === activeQuickViewId);
+      showToast(`Added "${product ? product.name : 'Product'}" to cart`);
       closeQuickView();
       openCart();
     });
@@ -404,12 +440,12 @@ document.addEventListener("DOMContentLoaded", () => {
       cartItemsList.style.display = "none";
       cartEmptyState.style.display = "block";
       if (checkoutBtn) checkoutBtn.disabled = true;
-      if (cartSubtotalEl) cartSubtotalEl.textContent = "$0";
+      if (cartSubtotalEl) cartSubtotalEl.textContent = "Rs. 0";
     } else {
       cartItemsList.style.display = "flex";
       cartEmptyState.style.display = "none";
       if (checkoutBtn) checkoutBtn.disabled = false;
-      if (cartSubtotalEl) cartSubtotalEl.textContent = `$${subtotal.toLocaleString("en-US")}`;
+      if (cartSubtotalEl) cartSubtotalEl.textContent = `Rs. ${subtotal.toLocaleString("en-US")}`;
 
       cartItemsList.innerHTML = items.map(item => `
         <div class="cart-item-row" data-id="${item.id}">
@@ -459,16 +495,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Checkout Action (Demo Simulated Flow)
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener("click", () => {
-      const subtotal = CartState.getSubtotal();
-      if (subtotal === 0) return;
-      showToast(`Order initiated for $${subtotal.toLocaleString("en-US")}. Escrow lock activated.`);
-      CartState.clear();
-      setTimeout(closeCart, 1500);
-    });
-  }
+  // Checkout Action handled by js/checkout.js (Checkout with Escrow modal)
 
   // --- Keyboard Shortcuts & Esc Listener ---
   window.addEventListener("keydown", (e) => {
@@ -502,4 +529,5 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial Render
   updateBadge();
   renderProducts();
+  loadProductsFromSupabase();
 });

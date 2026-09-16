@@ -158,7 +158,8 @@ const CartState = {
   },
 
   addItem(productId, quantity = 1) {
-    const product = PRODUCTS.find(p => p.id === productId);
+    const list = window.allProducts || PRODUCTS;
+    const product = list.find(p => p.id === productId) || PRODUCTS.find(p => p.id === productId);
     if (!product) return;
 
     const items = this.getItems();
@@ -210,3 +211,9 @@ const CartState = {
     return this.getItems().reduce((sum, item) => sum + (item.price * item.quantity), 0);
   }
 };
+
+// Expose globally
+if (typeof window !== "undefined") {
+  window.PRODUCTS = PRODUCTS;
+  window.CartState = CartState;
+}

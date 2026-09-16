@@ -91,12 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cartItemsList) cartItemsList.style.display = "none";
       if (cartEmptyState) cartEmptyState.style.display = "block";
       if (checkoutBtn) checkoutBtn.disabled = true;
-      if (cartSubtotalEl) cartSubtotalEl.textContent = "$0";
+      if (cartSubtotalEl) cartSubtotalEl.textContent = "Rs. 0";
     } else {
       if (cartItemsList) cartItemsList.style.display = "flex";
       if (cartEmptyState) cartEmptyState.style.display = "none";
       if (checkoutBtn) checkoutBtn.disabled = false;
-      if (cartSubtotalEl) cartSubtotalEl.textContent = `$${subtotal.toLocaleString("en-US")}`;
+      if (cartSubtotalEl) cartSubtotalEl.textContent = `Rs. ${subtotal.toLocaleString("en-US")}`;
 
       if (cartItemsList) {
         cartItemsList.innerHTML = items.map(item => `
@@ -168,16 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const checkoutBtn = document.getElementById("checkoutBtn");
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener("click", () => {
-      const subtotal = CartState.getSubtotal();
-      if (subtotal === 0) return;
-      showToast(`Order initiated for $${subtotal.toLocaleString("en-US")}. Escrow activated.`);
-      CartState.clear();
-      setTimeout(closeCart, 1500);
-    });
-  }
+  // Checkout Action handled by js/checkout.js (Checkout with Escrow modal)
 
   // --- Mobile Drawer Toggle ---
   function openMobileMenu() {
@@ -465,17 +456,69 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Form is valid! Populate confirmation modal
-      confirmImg.src = uploadedImageData.dataUrl;
-      confirmImg.alt = productName.value.trim();
-      confirmTitle.textContent = productName.value.trim();
-      confirmCategory.textContent = productCategory.options[productCategory.selectedIndex].text;
-      confirmCondition.textContent = productCondition.options[productCondition.selectedIndex].text;
-      confirmPrice.textContent = `$${priceVal.toLocaleString("en-US")}`;
-      confirmSeller.textContent = `${sellerName.value.trim()} (${sellerLocation.value.trim()})`;
+      // Prepare product payload
+      const submitBtn = sellForm.querySelector('button[type="submit"]');
+      const origBtnText = submitBtn ? submitBtn.textContent : "Publish Listing";
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Saving to Database...";
+      }
 
-      confirmationModal.classList.add("open");
-      document.body.style.overflow = "hidden";
+      const productPayload = {
+        name: productName.value.trim(),
+        category: productCategory.value,
+        price: priceVal,
+        condition: productCondition.value,
+        condition_note: document.getElementById("productConditionNote") ? document.getElementById("productConditionNote").value.trim() : "",
+        description: productDescription.value.trim(),
+        image: uploadedImageData ? uploadedImageData.dataUrl : "",
+        seller: sellerName.value.trim(),
+        seller_email: sellerEmail.value.trim(),
+        seller_phone: sellerPhone.value.trim(),
+        location: sellerLocation.value.trim()
+      };
+
+      // Save to Supabase (and keep local cache sync)
+      (async () => {
+        let savedToSupabase = false;
+        try {
+          if (window.SupabaseDB) {
+            await window.SupabaseDB.insertProduct(productPayload);
+            savedToSupabase = true;
+            console.log("[Supabase] Product saved successfully to Supabase DB:", productPayload.name);
+          }
+        } catch (dbErr) {
+          console.warn("[Supabase] Notice saving to Supabase table:", dbErr.message || dbErr);
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = origBtnText;
+          }
+        }
+
+        // Form is valid! Populate confirmation modal
+        confirmImg.src = uploadedImageData.dataUrl;
+        confirmImg.alt = productName.value.trim();
+        confirmTitle.textContent = productName.value.trim();
+        confirmCategory.textContent = productCategory.options[productCategory.selectedIndex].text;
+        confirmCondition.textContent = productCondition.options[productCondition.selectedIndex].text;
+        confirmPrice.textContent = `$${priceVal.toLocaleString("en-US")}`;
+        confirmSeller.textContent = `${sellerName.value.trim()} (${sellerLocation.value.trim()})`;
+
+        // Update modal status hint
+        const modalDesc = confirmationModal.querySelector("p");
+        if (modalDesc) {
+          if (savedToSupabase) {
+            modalDesc.innerHTML = 'Saved directly to <strong>Supabase Database</strong> and queued for hardware verification.';
+          } else {
+            modalDesc.textContent = 'Your listing has been submitted and queued for verification inspection.';
+          }
+        }
+
+        confirmationModal.classList.add("open");
+        document.body.style.overflow = "hidden";
+        showToast(savedToSupabase ? "Listing saved to Supabase Database!" : "Listing successfully prepared!");
+      })();
     });
   }
 

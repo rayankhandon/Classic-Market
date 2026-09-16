@@ -402,55 +402,153 @@
   <div class="cart-drawer-wrap" id="cartDrawerWrap" aria-hidden="true">
     <div class="cart-backdrop"></div>
     <div class="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping Cart">
-      <div class="cart-header">
-        <div style="display: flex; align-items: baseline; gap: 8px;">
-          <h3 class="h3-title">Your Cart</h3>
-          <span id="cartCountDrawer" style="font-size: 0.84rem; color: var(--color-mid-gray);">(0 items)</span>
-        </div>
-        <button class="btn-icon" id="closeCartBtn" aria-label="Close cart drawer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-
-      <div class="cart-body">
-        <div id="cartItemsList" class="cart-items-list">
-          <!-- Cart row items rendered dynamically -->
-        </div>
-
-        <div id="cartEmptyState" class="cart-empty" style="display: none;">
-          <div class="cart-empty-icon" aria-hidden="true">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
+      
+      <!-- VIEW 1: CART ITEMS VIEW -->
+      <div class="cart-drawer-view" id="cartItemsView">
+        <div class="cart-header">
+          <div style="display: flex; align-items: baseline; gap: 8px;">
+            <h3 class="h3-title">Your Cart</h3>
+            <span id="cartCountDrawer" style="font-size: 0.84rem; color: var(--color-mid-gray);">(0 items)</span>
           </div>
-          <h4 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 6px;">Your cart is empty</h4>
-          <p style="font-size: 0.84rem; color: var(--color-muted-gray); margin-bottom: 20px;">Explore verified computers, components, and accessories to get started.</p>
-          <a href="#shop" class="btn btn-secondary btn-sm" onclick="document.getElementById('cartDrawerWrap').classList.remove('open');">Browse Catalog</a>
+          <button class="btn-icon" id="closeCartBtn" aria-label="Close cart drawer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="cart-body">
+          <div id="cartItemsList" class="cart-items-list">
+            <!-- Cart row items rendered dynamically -->
+          </div>
+
+          <div id="cartEmptyState" class="cart-empty" style="display: none;">
+            <div class="cart-empty-icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+              </svg>
+            </div>
+            <h4 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 6px;">Your cart is empty</h4>
+            <p style="font-size: 0.84rem; color: var(--color-muted-gray); margin-bottom: 20px;">Explore verified computers, components, and accessories to get started.</p>
+            <a href="#shop" class="btn btn-secondary btn-sm" onclick="document.getElementById('cartDrawerWrap').classList.remove('open');">Browse Catalog</a>
+          </div>
+        </div>
+
+        <div class="cart-footer">
+          <div class="cart-summary-row total">
+            <span>Subtotal:</span>
+            <span id="cartSubtotal" class="cart-subtotal-price">Rs. 0</span>
+          </div>
+          <button class="btn cart-checkout-btn green-pill-btn" id="checkoutBtn">
+            Proceed to Checkout &rarr;
+          </button>
         </div>
       </div>
 
-      <div class="cart-footer">
-        <div class="cart-summary-row">
-          <span>Shipping (Tracked & Insured)</span>
-          <span style="font-weight: 600; color: var(--color-black);">Complimentary</span>
+      <!-- VIEW 2: INLINE CHECKOUT FORM VIEW (Inside Drawer) -->
+      <div class="cart-drawer-view" id="drawerCheckoutView" hidden>
+        <div class="cart-header">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <button type="button" class="drawer-back-btn" id="drawerBackToCartBtn" aria-label="Back to Cart">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              <span>Back</span>
+            </button>
+            <h3 class="h3-title" style="font-size: 1.15rem; margin: 0;">Escrow Checkout</h3>
+          </div>
+          <button class="btn-icon" id="closeDrawerCheckoutBtn" aria-label="Close drawer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
         </div>
-        <div class="cart-summary-row">
-          <span>Escrow Protection Guarantee</span>
-          <span style="font-weight: 600; color: var(--color-black);">Included</span>
+
+        <div class="cart-body">
+          <!-- Mini Order Summary -->
+          <div class="drawer-order-summary-mini">
+            <div id="drawerSummaryItemsList">
+              <!-- Inline items preview -->
+            </div>
+            <div class="drawer-summary-item" style="margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--color-border);">
+              <span>Insured Courier</span>
+              <strong style="color: var(--color-black);">Complimentary ($0)</strong>
+            </div>
+            <div class="drawer-summary-item" style="font-size: 0.95rem; font-weight: 800; color: var(--color-black); margin-top: 4px;">
+              <span>Total Escrow Lock</span>
+              <span id="drawerCheckoutTotal">$0</span>
+            </div>
+          </div>
+
+          <!-- Inline Checkout Form -->
+          <form class="drawer-checkout-form" id="drawerEscrowForm" novalidate>
+            <div class="drawer-field-group">
+              <label class="drawer-field-label" for="dName">Full Legal Name <span style="color:red">*</span></label>
+              <input type="text" id="dName" class="drawer-field-input" placeholder="Jordan Hayes" required>
+              <span class="drawer-field-error" id="dNameError"></span>
+            </div>
+
+            <div class="drawer-grid-2">
+              <div class="drawer-field-group">
+                <label class="drawer-field-label" for="dEmail">Email <span style="color:red">*</span></label>
+                <input type="email" id="dEmail" class="drawer-field-input" placeholder="jordan@domain.com" required>
+                <span class="drawer-field-error" id="dEmailError"></span>
+              </div>
+              <div class="drawer-field-group">
+                <label class="drawer-field-label" for="dPhone">Phone <span style="color:red">*</span></label>
+                <input type="tel" id="dPhone" class="drawer-field-input" placeholder="555-019-2834" required>
+                <span class="drawer-field-error" id="dPhoneError"></span>
+              </div>
+            </div>
+
+            <div class="drawer-field-group">
+              <label class="drawer-field-label" for="dAddress">Delivery Address <span style="color:red">*</span></label>
+              <input type="text" id="dAddress" class="drawer-field-input" placeholder="House #, Street Address, Area" required>
+              <span class="drawer-field-error" id="dAddressError"></span>
+            </div>
+
+            <div class="drawer-grid-3">
+              <div class="drawer-field-group">
+                <label class="drawer-field-label" for="dCity">City <span style="color:red">*</span></label>
+                <input type="text" id="dCity" class="drawer-field-input" placeholder="Karachi" required>
+                <span class="drawer-field-error" id="dCityError"></span>
+              </div>
+              <div class="drawer-field-group">
+                <label class="drawer-field-label" for="dState">Province / State <span style="color:red">*</span></label>
+                <input type="text" id="dState" class="drawer-field-input" placeholder="Sindh" required>
+                <span class="drawer-field-error" id="dStateError"></span>
+              </div>
+              <div class="drawer-field-group">
+                <label class="drawer-field-label" for="dZip">Postal Code <span style="color:red">*</span></label>
+                <input type="text" id="dZip" class="drawer-field-input" placeholder="75500" required>
+                <span class="drawer-field-error" id="dZipError"></span>
+              </div>
+            </div>
+
+            <!-- Payment Protocol -->
+            <div class="drawer-payment-pill">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <div style="flex: 1;">
+                <strong style="display: block; font-size: 0.84rem;">Neutral Escrow Protection</strong>
+                <span style="color: var(--color-mid-gray); font-size: 0.74rem;">Payment held securely until delivery & benchmark testing.</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="drawerSubmitOrderBtn" style="width: 100%; padding: 14px; margin-top: 6px;">
+              Confirm & Lock Order
+            </button>
+          </form>
         </div>
-        <div class="cart-summary-row total">
-          <span>Subtotal</span>
-          <span id="cartSubtotal">$0</span>
-        </div>
-        <button class="btn btn-primary cart-checkout-btn" id="checkoutBtn">
-          Checkout with Escrow
-        </button>
       </div>
+
     </div>
   </div>
 
@@ -481,8 +579,163 @@
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- =======================================================================
+       CHECKOUT WITH ESCROW MODAL
+       ======================================================================= -->
+  <div class="modal-overlay" id="checkoutModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle">
+    <div class="checkout-modal-box">
+      <button class="modal-close-btn" id="closeCheckoutModalBtn" aria-label="Close checkout dialog">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <span class="checkout-badge-escrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        Bank-Grade Escrow Protection
+      </span>
+      <h3 id="checkoutModalTitle" style="font-size: 1.45rem; font-weight: 800; margin-bottom: 6px;">Checkout & Verification</h3>
+      <p style="font-size: 0.875rem; color: var(--color-mid-gray); margin-bottom: 16px;">Funds are held in neutral escrow until you receive and inspect your hardware.</p>
+
+      <!-- Cart Order Summary -->
+      <div class="checkout-order-summary-box">
+        <div class="checkout-items-preview" id="checkoutItemsPreview">
+          <!-- Dynamically populated -->
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--color-mid-gray); margin-bottom: 4px;">
+          <span>Tracked & Insured Courier</span>
+          <span style="font-weight: 600; color: var(--color-black);">Complimentary ($0)</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 800; color: var(--color-black); margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--color-border);">
+          <span>Total to Escrow</span>
+          <span id="checkoutTotalDisplay">$0</span>
+        </div>
+      </div>
+
+      <!-- Checkout Form -->
+      <form id="escrowCheckoutForm" novalidate>
+        <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.04em;">1. Customer & Contact</h4>
+        <div class="checkout-grid-2">
+          <div class="form-group">
+            <label class="form-label" for="coFullName">Full Name <span style="color:red">*</span></label>
+            <input type="text" id="coFullName" class="form-input" placeholder="Jordan Hayes" required>
+            <span class="field-error" id="coFullNameError"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="coEmail">Email Address <span style="color:red">*</span></label>
+            <input type="email" id="coEmail" class="form-input" placeholder="jordan@domain.com" required>
+            <span class="field-error" id="coEmailError"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="coPhone">Phone Number <span style="color:red">*</span></label>
+          <input type="tel" id="coPhone" class="form-input" placeholder="555-019-2834" required>
+          <span class="field-error" id="coPhoneError"></span>
+        </div>
+
+        <h4 style="font-size: 0.95rem; font-weight: 700; margin: 20px 0 12px; text-transform: uppercase; letter-spacing: 0.04em;">2. Insured Shipping Address</h4>
+        <div class="form-group">
+          <label class="form-label" for="coAddress">Street Address <span style="color:red">*</span></label>
+          <input type="text" id="coAddress" class="form-input" placeholder="742 Evergreen Terrace, Apt 4B" required>
+          <span class="field-error" id="coAddressError"></span>
+        </div>
+        <div class="checkout-grid-3">
+          <div class="form-group">
+            <label class="form-label" for="coCity">City <span style="color:red">*</span></label>
+            <input type="text" id="coCity" class="form-input" placeholder="Springfield" required>
+            <span class="field-error" id="coCityError"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="coState">State / Region <span style="color:red">*</span></label>
+            <input type="text" id="coState" class="form-input" placeholder="OR" required>
+            <span class="field-error" id="coStateError"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="coZip">Postal Code <span style="color:red">*</span></label>
+            <input type="text" id="coZip" class="form-input" placeholder="97477" required>
+            <span class="field-error" id="coZipError"></span>
+          </div>
+        </div>
+
+        <h4 style="font-size: 0.95rem; font-weight: 700; margin: 20px 0 12px; text-transform: uppercase; letter-spacing: 0.04em;">3. Payment Protocol</h4>
+        <div class="payment-method-card">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+          <div style="flex: 1;">
+            <strong style="font-size: 0.9rem; display: block;">Protected Escrow Deposit</strong>
+            <span style="font-size: 0.78rem; color: var(--color-mid-gray);">Funds securely locked until product delivery and hardware benchmark inspection (48h trial).</span>
+          </div>
+          <span class="badge badge-condition" style="font-size: 0.7rem;">Verified</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="coSubmitBtn" style="width: 100%; padding: 14px; margin-top: 8px;">
+          Lock Order with Escrow
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       ORDER CONFIRMED SUCCESS MODAL
+       ======================================================================= -->
+  <div class="modal-overlay" id="orderSuccessModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="orderSuccessTitle">
+    <div class="account-modal-box" style="max-width: 520px;">
+      <button class="modal-close-btn" id="closeOrderSuccessBtn" aria-label="Close order confirmation">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div style="width: 48px; height: 48px; border-radius: 50%; background-color: var(--color-black); color: var(--color-white); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <h3 id="orderSuccessTitle" style="font-size: 1.4rem; font-weight: 800; margin-bottom: 6px;">Order Confirmed & Escrow Locked</h3>
+      <p style="font-size: 0.875rem; color: var(--color-mid-gray); margin-bottom: 20px;">Your transaction has been recorded in the Supabase database. The seller will be dispatched an insured shipping label.</p>
+
+      <div class="order-success-receipt" id="orderReceiptBox">
+        <div class="receipt-row">
+          <span>Order Reference</span>
+          <strong id="receiptOrderNum">CM-XXXXX</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Customer</span>
+          <span id="receiptCustomerName">--</span>
+        </div>
+        <div class="receipt-row">
+          <span>Destination</span>
+          <span id="receiptDestination">--</span>
+        </div>
+        <div class="receipt-row">
+          <span>Database Sync</span>
+          <span class="badge badge-condition" style="font-size: 0.7rem;">Supabase Active</span>
+        </div>
+        <div class="receipt-row total">
+          <span>Escrow Amount</span>
+          <strong id="receiptTotal">$0</strong>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary" id="finishOrderBtn" style="width: 100%;">
+        Return to Marketplace
+      </button>
+    </div>
+  </div>
+
+  <!-- Supabase JS Client & Database Integration -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
   <script src="js/products.js"></script>
+  <script src="js/checkout.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
