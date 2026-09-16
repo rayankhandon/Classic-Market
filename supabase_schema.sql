@@ -1,7 +1,7 @@
 -- =========================================================
 -- CLASSIC MARKET: Supabase Database Schema
 -- Run this script in your Supabase Dashboard SQL Editor:
--- https://supabase.com/dashboard/project/nlljxlmymdwdwxfbmavu/sql
+-- https://supabase.com/dashboard/project/csuwidtjqkjpndlrlrkv/sql
 -- =========================================================
 
 -- 1. Create the `products` table
@@ -144,6 +144,32 @@ CREATE TABLE IF NOT EXISTS public.orders (
     status TEXT DEFAULT 'Escrow Held / Pending Fulfillment',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
+
+-- Ensure orders columns exist if the table was previously created with another schema
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='orders' AND column_name='customer_email') THEN
+        ALTER TABLE public.orders ADD COLUMN customer_email TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='orders' AND column_name='shipping_city') THEN
+        ALTER TABLE public.orders ADD COLUMN shipping_city TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='orders' AND column_name='shipping_state') THEN
+        ALTER TABLE public.orders ADD COLUMN shipping_state TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='orders' AND column_name='shipping_zip') THEN
+        ALTER TABLE public.orders ADD COLUMN shipping_zip TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='orders' AND column_name='items') THEN
+        ALTER TABLE public.orders ADD COLUMN items JSONB DEFAULT '[]'::jsonb;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='orders' AND column_name='subtotal') THEN
+        ALTER TABLE public.orders ADD COLUMN subtotal NUMERIC(10, 2) DEFAULT 0;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='orders' AND column_name='status') THEN
+        ALTER TABLE public.orders ADD COLUMN status TEXT DEFAULT 'Escrow Held / Pending Fulfillment';
+    END IF;
+END $$;
 
 ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 

@@ -4,8 +4,8 @@
  */
 
 const SUPABASE_CONFIG = {
-  url: "https://nlljxlmymdwdwxfbmavu.supabase.co",
-  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5sbGp4bG15bWR3ZHd4ZmJtYXZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MjcxNzEsImV4cCI6MjEwNTEwMzE3MX0.7kit1ntCOVC28b9OD_7m09QtJgSO-FqSqhYNorKOOVM"
+  url: "https://csuwidtjqkjpndlrlrkv.supabase.co",
+  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzdXdpZHRqcWtqcG5kbHJscmt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1ODY2MTAsImV4cCI6MjEwNDE2MjYxMH0.95chelJ7MtUlmu54UVKdLUPw5cWIDxUeDVeslTxzBkQ"
 };
 
 // Initialize Supabase Client instance (uses official @supabase/supabase-js CDN when loaded)
